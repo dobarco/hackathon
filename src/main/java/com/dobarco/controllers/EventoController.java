@@ -14,21 +14,33 @@ import com.dobarco.models.Convidado;
 import com.dobarco.models.Evento;
 import com.dobarco.repository.ConvidadoRepository;
 import com.dobarco.repository.EventoRepository;
-
+//Controller Annotation 
 @Controller
 public class EventoController {
 	
+	
+	//Dependency Injection
 	@Autowired
 	private EventoRepository er;
 	
+	//Dependency Injection
 	@Autowired
 	private ConvidadoRepository cr;
 	
+	
+	//Listen to any http requests to /
+	@RequestMapping("/")
+	public String index() {
+		return "index";
+	}
+	
+	// Listen to any calls using GET method to /cadastrarEvento
 	@RequestMapping(value = "/cadastrarEvento", method = RequestMethod.GET)
 	public String form() {
 		return "evento/formEvento";
 	}
 	
+	// Listen to any calls using POST method to /cadastrarEvento
 	@RequestMapping(value = "/cadastrarEvento", method = RequestMethod.POST)
 	public String salvar(@Valid Evento evento, BindingResult result, RedirectAttributes attributes) {
 		if(result.hasErrors()) {
@@ -39,7 +51,7 @@ public class EventoController {
 		attributes.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
 		return "redirect:/cadastrarEvento";
 	}
-	
+	//Show the list of Events inside the DB.
 	@RequestMapping("/eventos")
 	public ModelAndView listaEventos() {
 		ModelAndView mv = new ModelAndView("index");
@@ -47,7 +59,7 @@ public class EventoController {
 		mv.addObject("eventos", eventos);
 		return mv;
 	}
-	
+	// Delete a event
 	@RequestMapping("/deletar")
 	public String deletarEvento(long codigo) {
 		Evento evento = er.findByCodigo(codigo);
@@ -55,6 +67,7 @@ public class EventoController {
 		return "redirect:/eventos";
 	}
 	
+	//Find event details
 	@RequestMapping(value = "/{codigo}", method= RequestMethod.GET)
 	public ModelAndView detalhesEvento(@PathVariable("codigo") long codigo) {
 		Evento evento = er.findByCodigo(codigo);

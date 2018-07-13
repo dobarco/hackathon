@@ -1,4 +1,4 @@
-# Evento e Convidado App
+# Demo Spring and Spring Boot
 
 Sample project created to validate some Spring concepts
 

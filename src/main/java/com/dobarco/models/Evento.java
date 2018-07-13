@@ -15,9 +15,7 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Evento implements Serializable{
-	/**
-	 * 
-	 */
+	// Serial ID
 	private static final long serialVersionUID = 1L;
 
 	@Id
